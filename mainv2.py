@@ -18,13 +18,13 @@ def clear_all():
 def update():
     key=name.get()
     if key == "":
-        messagebox.showInfo("Error", "Name cannot be empty")
+        messagebox.showinfo("Error", "Name cannot be empty")
     else:
         if key not in myAdressBook.keys():
             book_list.insert(END,key)
-    # update dictionary
-    myAdressBook[key]=(address.get(),mobile.get,email.get,birthday.get)
-    clear_all()
+        # update dictionary
+        myAdressBook[key]=(address.get(),mobile.get(),email.get(),birthday.get)
+        clear_all()
 
 # ------------------------------------------------------------------
 
@@ -33,7 +33,7 @@ def edit():
     index = book_list.curselection()
     if index:
         name.insert(0,book_list.get(index))
-        details=myAdressBook[name.get]
+        details=myAdressBook[name.get()]
 
         address.insert(0,details[0])
         mobile.insert(0,details[1])
@@ -43,7 +43,7 @@ def edit():
         messagebox.showinfo("Error","Select a name")
     
 def delete():
-    index = book_list.curselection
+    index = book_list.curselection()
     if index:
         del myAdressBook[book_list.get(index)]
         book_list.delete(index)
@@ -76,7 +76,7 @@ def display(event):
     
     # label widgets to show in toplevel
     lbl=Label(newWindow)
-    lbl.grid(row=1,column=0)
+    lbl.grid(row=0,column=0)
     lbl.configure(text=contact)
 
 # ------------------------------------------------------------------
@@ -87,7 +87,7 @@ def reset():
     clear_all()
     book_list.delete(0,END)
     myAdressBook.clear()
-    bookName.configure(text="My Adress Book")
+    bookName.configure(text="My Address Book")
 
 # -------------------------------------------------------------------
 
@@ -98,6 +98,8 @@ def save():
     if fout:
         print(myAdressBook,file=fout)
         reset()
+    else:
+        messagebox.showinfo("Warning","Address book not saved")
 
 # -----------------------------------------------------------------------
 
@@ -106,12 +108,12 @@ def openFile():
     reset()
     fin = askopenfile(title='Open File')
     if fin:
-        myAdressBook=eval(fin.read)
+        myAdressBook=eval(fin.read())
         for key in myAdressBook.keys():
             book_list.insert(END,key)
         bookName.configure(text=os.path.basename(fin.name))
     else:
-        messagebox.showinfo("Warning", "No adress book opened")
+        messagebox.showinfo("Warning", "No address book opened")
 
 
 # ---------------------------------------------------------------------
